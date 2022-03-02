@@ -24,7 +24,7 @@ apply(plugin = "java-library")
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
+    implementation("org.javassist:javassist:3.27.0-GA")
     implementation("org.slf4j:slf4j-api:1.7.33")
     implementation("org.slf4j:slf4j-log4j12:1.7.33")
 
@@ -35,7 +35,6 @@ dependencies {
 
 tasks {
     withType<JavaCompile>() {
-        // 启用在单独的daemon进程中编译
         options.isFork = true
         options.encoding = "UTF-8"
     }
@@ -55,6 +54,19 @@ tasks {
     withType<Test> {
         useJUnitPlatform()
     }
+
+    jar{
+        manifest {
+            attributes(
+                "Implementation-Title" to  project.name,
+                "Implementation-Version" to "1.0.0",
+                "Premain-Class" to "com.github.tagwan.japm.AgentMain", //对应premain方法
+                "Agent-Class" to "com.github.tagwan.japm.AgentMain",   //对应agentmain方法
+                "Built-By" to "Espresso"
+            )
+        }
+    }
+
 }
 
 java {

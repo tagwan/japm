@@ -2,6 +2,7 @@ package com.github.tagwan.japm
 
 import com.github.tagwan.japm.agent.AgentMain
 import java.lang.instrument.Instrumentation
+import com.github.tagwan.japm.const.keys
 
 
 /**
@@ -19,7 +20,7 @@ fun premain(agentArgs: String?, inst: Instrumentation) {
         val paramGroup = agentArgs.split(",").toTypedArray()
         for (param in paramGroup) {
             val keyValue = param.split("=").toTypedArray()
-            if (AgentMain.keys.contains(keyValue[0])) {
+            if (keys.contains(keyValue[0])) {
                 System.setProperty("\$bit" + keyValue[0], keyValue[1])
             }
         }

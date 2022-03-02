@@ -3,7 +3,7 @@ package com.github.tagwan.japm.collect
 import javassist.CtClass
 
 /**
- * 收集器
+ * 采集器
  *
  * @data 2022/03/02
  * @author jdg

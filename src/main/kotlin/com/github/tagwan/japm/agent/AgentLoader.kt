@@ -1,4 +1,4 @@
-package com.github.tagwan.japm.loader
+package com.github.tagwan.japm.agent
 
 import javassist.*
 import java.io.IOException

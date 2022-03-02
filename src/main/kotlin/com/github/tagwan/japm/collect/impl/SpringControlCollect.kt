@@ -2,8 +2,8 @@ package com.github.tagwan.japm.collect.impl
 
 import com.github.tagwan.japm.collect.AbstractCollect
 import com.github.tagwan.japm.collect.ICollect
-import com.github.tagwan.japm.loader.AgentLoader
-import com.github.tagwan.japm.loader.AgentLoader.MethodSrcBuild
+import com.github.tagwan.japm.agent.AgentLoader
+import com.github.tagwan.japm.agent.AgentLoader.MethodSrcBuild
 import javassist.CtClass
 import javassist.CtMethod
 import javassist.Modifier

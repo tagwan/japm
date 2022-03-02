@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @data 2022/03/02
  * @author jdg
  */
-open class AgentMain : ClassFileTransformer {
+open class ApmAgentTransformer : ClassFileTransformer {
 
     private val classPoolMap: MutableMap<ClassLoader, ClassPool> = ConcurrentHashMap()
 

@@ -3,14 +3,11 @@ package com.github.tagwan.japm.loader
 import javassist.*
 import java.io.IOException
 
-
 /**
  * 装载器
- * 构建代理监听环境
- * 为目标类载入代理监听
- */
-/**
- * Agent loader
+ *
+ * <p>
+ *     构建代理监听环境、为目标类载入代理监听
  *
  * @param className
  * @param loader  [ClassLoader]

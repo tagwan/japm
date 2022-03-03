@@ -24,7 +24,8 @@ apply(plugin = "java-library")
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.javassist:javassist:3.27.0-GA")
+    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.3")
+    implementation("org.javassist:javassist:3.28.0-GA")
     implementation("org.slf4j:slf4j-api:1.7.33")
     implementation("org.slf4j:slf4j-log4j12:1.7.33")
 

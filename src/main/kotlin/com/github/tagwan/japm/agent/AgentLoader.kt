@@ -69,12 +69,11 @@ class AgentLoader(
         }
 
         fun buildSrc(method: CtMethod): String {
-            var result: String
             return try {
                 val template = if (method.returnType.name == "void") VOID_SOURCE else SOURCE
-                val bSrc = if (beginSrc == null) "" else beginSrc!!
-                val eSrc = if (errorSrc == null) "" else errorSrc!!
-                val enSrc = if (endSrc == null) "" else endSrc!!
+                val bSrc = if (beginSrc == null) "" else beginSrc
+                val eSrc = if (errorSrc == null) "" else errorSrc
+                val enSrc = if (endSrc == null) "" else endSrc
                 String.format(template, bSrc, method.name, eSrc, enSrc)
             } catch (e: NotFoundException) {
                 throw RuntimeException(e)

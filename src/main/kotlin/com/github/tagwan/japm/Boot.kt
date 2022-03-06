@@ -1,8 +1,6 @@
 package com.github.tagwan.japm
 
-import com.github.tagwan.japm.agent.ApmAgentTransformer
 import java.lang.instrument.Instrumentation
-import com.github.tagwan.japm.const.keys
 
 
 /**
@@ -16,23 +14,7 @@ import com.github.tagwan.japm.const.keys
  * @param inst
  */
 fun premain(agentArgs: String?, inst: Instrumentation) {
-    if (agentArgs != null) {
-        val paramGroup = agentArgs.split(",").toTypedArray()
-        for (param in paramGroup) {
-            val keyValue = param.split("=").toTypedArray()
-            if (keys.contains(keyValue[0])) {
-                System.setProperty("\$bit" + keyValue[0], keyValue[1])
-            }
-        }
-    }
 
-    if (System.getProperty("\$bit_server") == null) {
-        System.setProperty("\$bit_server", "http://api.dagwan.com/receive")
-    }
-
-    // 这里通过硬编码，将所有采集器放入其中
-    val transformer = ApmAgentTransformer()
-    inst.addTransformer(transformer)
 }
 
 /**

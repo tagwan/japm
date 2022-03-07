@@ -6,13 +6,17 @@ import java.io.FileReader
 import java.util.*
 
 
-class PropertiesUtils(
-    private val path: String
-) {
+object PropertiesUtils {
 
-    var properties: Properties = Properties()
+    private val logger = LoggerFactory.getLogger(PropertiesUtils::class.java)
+    private var properties: Properties = Properties()
 
-    init {
+    fun init() {
+        if (System.getProperty("JapmPropFile") == null) {
+            logger.info("启动参数没有指定`JapmPropFile`， 启用默认配置")
+            System.setProperty("JapmPropFile", "japm-template.properties")
+        }
+        val path = System.getProperty("JapmPropFile")
         val bufferedReader = BufferedReader(FileReader(path))
         properties.load(bufferedReader)
     }
@@ -26,7 +30,5 @@ class PropertiesUtils(
         }
     }
 
-    companion object {
-        private val logger = LoggerFactory.getLogger(PropertiesUtils::class.java)
-    }
+
 }

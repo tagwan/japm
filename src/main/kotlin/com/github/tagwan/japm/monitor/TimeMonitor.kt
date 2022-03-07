@@ -10,7 +10,7 @@ object TimeMonitor {
     private val fnConvertName: (name: String) -> String = { key -> "TIME-${Thread.currentThread().id}-$key" }
     private var diff: Long = 0L
     fun init() {
-        diff = PropertiesUtils.getProperty("collect.minTime").toLong()
+        diff = PropertiesUtils.getProperty("metrics.minTime").toLong()
     }
 
     fun start(key: String) {

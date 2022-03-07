@@ -7,10 +7,13 @@ import java.util.concurrent.ConcurrentHashMap
 object TimeComponent {
     private val logger = LoggerFactory.getLogger(TimeComponent::class.java)
     private val timeMonitorMap = ConcurrentHashMap<String, Long>()
-    private val fnConvertName: (name: String) -> String = { key -> "TIME-${Thread.currentThread().id}-$key" }
-    private var diff: Long = 0L
+    private val fnConvertName: (name: String) -> String = {
+            key -> "TIME-${Thread.currentThread().id}-$key"
+    }
+    private var metrics: Long = 0L
+
     fun init() {
-        diff = PropertiesUtils.getProperty("collect.minTime").toLong()
+        metrics = PropertiesUtils.getProperty("metrics.minTime").toLong()
     }
 
     fun start(key: String) {
@@ -22,7 +25,7 @@ object TimeComponent {
         val startTime = timeMonitorMap[fnConvertName(key)]
             ?: return
         val useTime = System.currentTimeMillis() - startTime
-        if (useTime < diff) {
+        if (useTime < metrics) {
             return
         }
         logger.info("key:${key} 执行耗时 ${useTime}ms")

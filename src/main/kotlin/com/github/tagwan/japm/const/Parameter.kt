@@ -1,13 +1,6 @@
-//package com.github.tagwan.japm.const
-//
-//import com.github.tagwan.japm.collect.ICollect
-//import java.util.ArrayList
-//
-//// 采集器集合
-//val COLLECTORS: ArrayList<ICollect> = arrayListOf(
-//    AnnotationCollector()
-//)
-//
-//val keys: ArrayList<String> = arrayListOf("server", "key", "secret")
-//
-//const val INTERFACE = "JampCollector"
+package com.github.tagwan.japm.const
+
+const val PROPERTY_BOOT = "JapmPropFile"
+const val DEFAULT_CFG = "japm-template.properties"
+const val PATH_BANNER = "banner"
+const val BANNER = "banner.txt"

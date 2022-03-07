@@ -1,4 +1,4 @@
-package com.github.tagwan.japm.internal
+package com.github.tagwan.japm.component
 
 import com.github.tagwan.japm.const.DEFAULT_CFG
 import com.github.tagwan.japm.const.PROPERTY_BOOT
@@ -7,9 +7,9 @@ import java.io.*
 import java.util.*
 
 
-object PropertiesUtils {
+object PropertiesComponent {
 
-    private val logger = LoggerFactory.getLogger(PropertiesUtils::class.java)
+    private val logger = LoggerFactory.getLogger(PropertiesComponent::class.java)
     private var properties: Properties = Properties()
 
     fun init() {

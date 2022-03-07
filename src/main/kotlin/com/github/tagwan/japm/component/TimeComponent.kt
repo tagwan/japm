@@ -1,11 +1,11 @@
-package com.github.tagwan.japm.monitor
+package com.github.tagwan.japm.component
 
 import com.github.tagwan.japm.internal.PropertiesUtils
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
-object TimeMonitor {
-    private val logger = LoggerFactory.getLogger(TimeMonitor::class.java)
+object TimeComponent {
+    private val logger = LoggerFactory.getLogger(TimeComponent::class.java)
     private val timeMonitorMap = ConcurrentHashMap<String, Long>()
     private val fnConvertName: (name: String) -> String = { key -> "TIME-${Thread.currentThread().id}-$key" }
     private var diff: Long = 0L

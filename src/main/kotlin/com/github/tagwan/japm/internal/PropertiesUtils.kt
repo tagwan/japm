@@ -14,7 +14,7 @@ object PropertiesUtils {
 
     fun init() {
         if (System.getProperty(PROPERTY_BOOT) == null) {
-            logger.info("启动参数没有指定`JapmPropFile`， 启用默认配置")
+            logger.info("启动参数没有指定`JapmPropFile`， 启用默认配置~")
             val uri = this.javaClass.classLoader.getResource(DEFAULT_CFG)
             System.setProperty(PROPERTY_BOOT, uri?.path ?: "")
         }
@@ -27,7 +27,7 @@ object PropertiesUtils {
         try {
             return properties.getProperty(key)
         } catch (e: Exception) {
-            logger.error("key::$key 没有获取到配置值，请检查配置")
+            logger.error("key::$key 没有获取到配置值，请检查配置~")
             return ""
         }
     }

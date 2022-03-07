@@ -35,6 +35,8 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
             if (className == "com/github/tagwan/japm/monitor/TimeMonitor")
                 return super.visitCode()
 
+
+
             // 方法的参数
             mv.visitLdcInsn("${className}-${name}-${descriptor}")
 

@@ -2,6 +2,14 @@
 
 <h1 align="center">JAPM</h1>
 
+[![Github](https://img.shields.io/badge/GitHub-white.svg?style=flat-square&logo=github&logoColor=181717)](https://github.com/tagwan/jspm)
+![GitHub](https://img.shields.io/github/license/tagwan/japm)
+![GitHub stars](https://img.shields.io/github/stars/tagwan/japm.svg)
+![GitHub forks](https://img.shields.io/github/forks/tagwan/japm.svg)
+![GitHub issues](https://img.shields.io/github/issues-raw/tagwan/japm?label=issues)
+![GitHub last commit](https://img.shields.io/github/last-commit/tagwan/japm.svg)
+
+
 <div align="center">
 
 一个针对高并发、低延迟应用设计的高性能Jvm程序（java、kotlin, eg..）的性能监控和统计工具。

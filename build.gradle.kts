@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.tagwan"
-version = "0.0.1"
+version = "1.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -32,8 +32,7 @@ dependencies {
     implementation("org.slf4j:slf4j-log4j12:1.7.33")
 
     testImplementation("junit:junit:4.12")
-    testImplementation("io.mockk:mockk:1.10.0")
-
+    //testImplementation("io.mockk:mockk:1.10.0")
 }
 
 tasks {
@@ -58,10 +57,10 @@ tasks {
         useJUnitPlatform()
     }
 
-    jar{
+    jar {
         manifest {
             attributes(
-                "Implementation-Title" to  project.name,
+                "Implementation-Title" to project.name,
                 "Implementation-Version" to "1.0.0",
                 "Premain-Class" to "com.github.tagwan.japm.BootKt", // 对应premain方法
                 "Agent-Class" to "com.github.tagwan.japm.BootKt",   // 对应agentmain方法

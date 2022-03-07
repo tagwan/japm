@@ -1,15 +1,14 @@
 package com.github.tagwan.japm.monitor
 
-import org.objectweb.asm.ClassVisitor
-import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.MethodVisitor
-import org.objectweb.asm.Opcodes
-import org.objectweb.asm.Opcodes.GETSTATIC
-import org.objectweb.asm.Opcodes.INVOKEVIRTUAL
+import org.objectweb.asm.*
+import org.slf4j.LoggerFactory
+import java.util.*
 
 class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
 
     private lateinit var className: String
+    private var isInterface: Boolean = false
+    private val fieldNameList: ArrayList<String> = ArrayList()
 
     /**
      * 访问类时回调
@@ -17,6 +16,16 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
     override fun visit(version: Int, access: Int, name: String, signature: String?, superName: String?, interfaces: Array<out String>?) {
         super.visit(version, access, name, signature, superName, interfaces)
         className = name
+        isInterface = access and Opcodes.ACC_INTERFACE != 0
+    }
+
+
+    override fun visitField(access: Int, name: String, descriptor: String?, signature: String?, value: Any?): FieldVisitor {
+        val upFieldName = name.substring(0, 1).toUpperCase() + name.substring(1)
+        fieldNameList.add("get$upFieldName")
+        fieldNameList.add("set$upFieldName")
+        fieldNameList.add("is$upFieldName")
+        return super.visitField(access, name, descriptor, signature, value)
     }
 
     /**
@@ -28,54 +37,39 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         descriptor: String,
         signature: String?,
         exceptions: Array<out String>?
-    ): MethodVisitor = object : MethodVisitor(
-        api,
-        cv.visitMethod(access, name, descriptor, signature, exceptions)
-    ) {
+    ): MethodVisitor {
 
-        /**
-         * 方法开始时回调
-         *
-         */
-        override fun visitCode() {
-            mv.visitFieldInsn(
-                GETSTATIC,
-                "com/github/tagwan/japm/monitor/TimeMonitor",
-                "INSTANCE",
-                "Lcom/github/tagwan/japm/monitor/TimeMonitor;"
-            )
-
-            // 方法的参数
-            mv.visitLdcInsn("${className}-${name}-${descriptor}")
-
-            mv.visitMethodInsn(
-                INVOKEVIRTUAL,
-                "com/github/tagwan/japm/monitor/TimeMonitor",
-                "start",
-                "(Ljava/lang/String;)V",
-                false
-            )
+        if (isInterface || isNeedVisit(access, name)) {
+            return super.visitMethod(access, name, descriptor, signature, exceptions)
         }
 
-        override fun visitInsn(opcode: Int) {
-            // 在每个 return 指令前插入 TimeMonitor.end
-            if (opcode in Opcodes.IRETURN..Opcodes.RETURN) {
+        totals++
+        return TimeMonitorMethodVisitor(
+            api,
+            cv.visitMethod(access, name, descriptor, signature, exceptions),
+            "${className}-${name}-${descriptor}"
+        )
+    }
 
-                mv.visitFieldInsn(
-                    GETSTATIC,
-                    "com/github/tagwan/japm/monitor/TimeMonitor", "INSTANCE", "Lcom/github/tagwan/japm/monitor/TimeMonitor;");
-
-                mv.visitLdcInsn("${className}-${name}-${descriptor}")
-
-                mv.visitMethodInsn(
-                    INVOKEVIRTUAL,
-                    "com/github/tagwan/japm/monitor/TimeMonitor",
-                    "end",
-                    "(Ljava/lang/String;)V",
-                    false
-                )
-            }
-            super.visitInsn(opcode)
+    private fun isNeedVisit(access: Int, name: String): Boolean {
+        //不对私有方法进行注入
+        if (access and Opcodes.ACC_PRIVATE != 0) {
+            return false
         }
+
+        //不对抽象方法、native方法、桥接方法、合成方法进行注入
+        if (access and Opcodes.ACC_ABSTRACT != 0 || access and Opcodes.ACC_NATIVE != 0 || access and Opcodes.ACC_BRIDGE != 0 || access and Opcodes.ACC_SYNTHETIC != 0) {
+            return false
+        }
+
+        if ("<init>" == name || "<clinit>" == name) {
+            return false
+        }
+        return !fieldNameList.contains(name)
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(TimeMonitorClassVisitor::class.java)
+        var totals = 0
     }
 }

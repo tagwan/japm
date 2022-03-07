@@ -2,6 +2,8 @@ package com.github.tagwan.japm.agent
 
 import com.github.tagwan.japm.collect.ICollect
 import com.github.tagwan.japm.collect.impl.TimeCollector
+import com.github.tagwan.japm.monitor.TimeMonitorClassVisitor
+import org.slf4j.LoggerFactory
 import java.lang.instrument.ClassFileTransformer
 import java.security.ProtectionDomain
 
@@ -31,6 +33,11 @@ class ApmTransformer : ClassFileTransformer {
             }
         }
 
+        logger.info("注入结束，本次共注入方法数::${TimeMonitorClassVisitor.totals}")
         return classfileBuffer
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(ApmTransformer::class.java)
     }
 }

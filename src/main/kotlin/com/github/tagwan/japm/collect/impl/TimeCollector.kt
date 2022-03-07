@@ -1,5 +1,7 @@
 package com.github.tagwan.japm.collect.impl
 
+import com.github.tagwan.japm.cfg.ExcludeCfg
+import com.github.tagwan.japm.cfg.IncludeCfg
 import com.github.tagwan.japm.collect.AbstractCollect
 import com.github.tagwan.japm.collect.ICollect
 import com.github.tagwan.japm.internal.PropertiesUtils
@@ -13,7 +15,11 @@ class TimeCollector : AbstractCollect(), ICollect {
     }
 
     override fun isTarget(classLoader: ClassLoader, className: String, classfileBuffer: ByteArray): Boolean {
-        println("className-->$className")
+        println("className1-->$className")
+        if (ExcludeCfg.validate(className))
+            return false
+
+        println("className2-->$className")
         return className == "com/github/tagwan/japm/Echo"
     }
 

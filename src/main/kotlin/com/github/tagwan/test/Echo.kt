@@ -1,38 +1,22 @@
 package com.github.tagwan.test
-import kotlinx.cli.*
 
-fun main(cliArgs: Array<String>) {
-    Echo().echo()
-
-    val parser = ArgParser("jmtrace")
-    val jar by parser.option(
-        ArgType.String,
-        shortName = "jar",
-        description = "Input jar package"
-    ).required()
-
-    val verbose by parser.option(
-        ArgType.Boolean,
-        shortName = "v",
-        description = "Enable verbose log"
-    ).default(false)
-
-    val args by parser.argument(
-        ArgType.String,
-        description = "Args for running jar"
-    ).optional().vararg()
-
-    parser.parse(cliArgs)
-
-    if (verbose) {
-        println("Jar: $jar")
-        println("Run: $args")
-    }
-
-}
+import org.slf4j.LoggerFactory
 
 class Echo {
-    fun echo() {
-        println("-->main")
+    fun echo(any: Any) {
+        Thread.sleep(5000)
+        val ss = 1123231
+        logger.info("Echo::echo()-->$ss")
+        logger.info("Echo::echo()-->$any")
+        logger.info("Echo::echo()-->$any")
     }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(Echo::class.java)
+    }
+}
+
+fun main() {
+    val obj = Echo()
+    obj.echo(1111)
 }

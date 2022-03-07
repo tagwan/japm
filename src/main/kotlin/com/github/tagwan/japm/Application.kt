@@ -5,6 +5,7 @@ import com.github.tagwan.japm.const.BANNER
 import com.github.tagwan.japm.const.StateEnum
 import com.github.tagwan.japm.internal.PropertiesUtils
 import com.github.tagwan.japm.monitor.TimeMonitor
+import com.github.tagwan.japm.monitor.TimeMonitorClassVisitor
 import org.slf4j.LoggerFactory
 import java.lang.instrument.Instrumentation
 

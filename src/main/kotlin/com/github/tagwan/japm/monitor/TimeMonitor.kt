@@ -20,6 +20,6 @@ object TimeMonitor {
 
 
         println("key:${key} 执行耗时 ${useTime}ms")
-;    }
+    }
 }
 

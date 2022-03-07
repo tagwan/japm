@@ -1,5 +1,6 @@
 package com.github.tagwan.japm
 
+import com.github.tagwan.japm.agent.ApmTransformer
 import java.lang.instrument.Instrumentation
 
 
@@ -14,7 +15,13 @@ import java.lang.instrument.Instrumentation
  * @param inst
  */
 fun premain(agentArgs: String?, inst: Instrumentation) {
+    if (System.getProperty("\$bit_server") == null) {
+        System.setProperty("\$bit_server", "http://api.dagwan.com/receive")
+    }
 
+    // 这里通过硬编码，将所有采集器放入其中
+    val transformer = ApmTransformer()
+    inst.addTransformer(transformer)
 }
 
 /**

@@ -5,7 +5,7 @@ import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 
-class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM7, cw) {
+class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
 
     private lateinit var className: String
 

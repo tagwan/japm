@@ -4,6 +4,8 @@ import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
+import org.objectweb.asm.Opcodes.GETSTATIC
+import org.objectweb.asm.Opcodes.INVOKEVIRTUAL
 
 class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
 
@@ -30,19 +32,24 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         api,
         cv.visitMethod(access, name, descriptor, signature, exceptions)
     ) {
-        // 方法开始时回调
+
+        /**
+         * 方法开始时回调
+         *
+         */
         override fun visitCode() {
-            if (className == "com/github/tagwan/japm/monitor/TimeMonitor")
-                return super.visitCode()
-
-
+            mv.visitFieldInsn(
+                GETSTATIC,
+                "com/github/tagwan/japm/monitor/TimeMonitor",
+                "INSTANCE",
+                "Lcom/github/tagwan/japm/monitor/TimeMonitor;"
+            )
 
             // 方法的参数
             mv.visitLdcInsn("${className}-${name}-${descriptor}")
 
-            // 调用 TimeMonitor.start
             mv.visitMethodInsn(
-                Opcodes.INVOKESTATIC,
+                INVOKEVIRTUAL,
                 "com/github/tagwan/japm/monitor/TimeMonitor",
                 "start",
                 "(Ljava/lang/String;)V",
@@ -51,16 +58,17 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         }
 
         override fun visitInsn(opcode: Int) {
-            if (className == "com/github/tagwan/japm/monitor/TimeMonitor")
-                return super.visitInsn(opcode)
-
             // 在每个 return 指令前插入 TimeMonitor.end
             if (opcode in Opcodes.IRETURN..Opcodes.RETURN) {
-                // 方法的参数
+
+                mv.visitFieldInsn(
+                    GETSTATIC,
+                    "com/github/tagwan/japm/monitor/TimeMonitor", "INSTANCE", "Lcom/github/tagwan/japm/monitor/TimeMonitor;");
+
                 mv.visitLdcInsn("${className}-${name}-${descriptor}")
-                // 调用 TimeMonitor.start
+
                 mv.visitMethodInsn(
-                    Opcodes.INVOKESTATIC,
+                    INVOKEVIRTUAL,
                     "com/github/tagwan/japm/monitor/TimeMonitor",
                     "end",
                     "(Ljava/lang/String;)V",
@@ -70,5 +78,4 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
             super.visitInsn(opcode)
         }
     }
-
 }

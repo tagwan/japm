@@ -4,7 +4,7 @@
 
 <div align="center">
 
-一个针对高并发、低延迟应用设计的高性能 Java 性能监控和统计工具。
+一个针对高并发、低延迟应用设计的高性能Jvm程序（java、kotlin, eg..）的性能监控和统计工具。
 
 
 </div>
@@ -15,7 +15,7 @@
 * -DJapmPropFile=/path/japm.properties
 
 ```bash
-java -javaagent:/path/japm-1.0.jar -DJapmPropFile=/path/japm.properties `-jar application.jar`
+java -javaagent:E:\\tmp\\japm-0.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties `-jar application.jar`
 ```
 
 ## Issue

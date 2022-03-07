@@ -24,7 +24,7 @@
 
 | Target      | Version |
 | ----------- | ----------- |
-| Jdk      | 11       |
+| JDK      | 11       |
 | Kotlin   | 1.5.31        |
 | Gradle   | 6.8.3        |
 
@@ -36,10 +36,10 @@ gradlew clean buid
 ## Usage
 
 在 JVM 启动参数里加上以下两个参数
-* `\-javaagent` : 指定代理jar
-* `\-DJapmPropFile` : 指定配置文件(不指定的话，则启用[默认配置](./src/main/resources/japm-template.properties)
+* `-javaagent` : 指定代理jar
+* `-DJapmPropFile` : 指定配置文件(不指定的话，则启用[默认配置](./src/main/resources/japm-template.properties))
 
-例如:
+eg..
 ```bash
 java -javaagent:E:\\tmp\\japm-0.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties `-jar application.jar`
 ```

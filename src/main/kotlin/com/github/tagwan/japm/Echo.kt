@@ -11,3 +11,7 @@ class Echo {
         private val logger = LoggerFactory.getLogger(Echo::class.java)
     }
 }
+
+fun main() {
+    Echo().echo(123)
+}

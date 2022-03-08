@@ -1,5 +1,6 @@
 package com.github.tagwan.japm.collect.impl
 
+import com.github.tagwan.japm.cfg.ConfigMgr
 import com.github.tagwan.japm.collect.AbstractCollect
 import com.github.tagwan.japm.collect.ICollect
 import com.github.tagwan.japm.monitor.TimeMonitorClassVisitor
@@ -25,7 +26,7 @@ class TimeCollector : AbstractCollect(), ICollect {
             return false
         }
 
-        return true
+        return ConfigMgr.validatePackage(clazzName)
     }
 
     override fun transform(classLoader: ClassLoader, clazzName: String, classfileBuffer: ByteArray): ByteArray {

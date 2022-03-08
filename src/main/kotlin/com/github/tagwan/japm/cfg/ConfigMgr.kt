@@ -54,6 +54,24 @@ object ConfigMgr {
             return null
         }
 
-        return new
+        return new.replace('.', '/')
+    }
+
+    fun validatePackage(name: String): Boolean {
+        val str = packageName
+            ?: return true
+        return name.startsWith(str)
+    }
+
+    fun validateBase(name: String?): Boolean {
+        val str = baseName
+            ?: return true
+        return str == name
+    }
+
+    fun validateInterface(names: HashSet<String>): Boolean {
+        val str = interfaceName
+            ?: return true
+        return names.contains(str)
     }
 }

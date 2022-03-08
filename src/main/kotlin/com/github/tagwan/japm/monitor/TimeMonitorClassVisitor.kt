@@ -1,14 +1,18 @@
 package com.github.tagwan.japm.monitor
 
+import com.github.tagwan.japm.cfg.ConfigMgr
 import org.objectweb.asm.*
 import org.slf4j.LoggerFactory
 import java.util.*
+import kotlin.collections.HashSet
 
 class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
 
     private lateinit var className: String
     private var isInterface: Boolean = false
     private val fieldNameList: ArrayList<String> = ArrayList()
+    private var superName: String? = null
+    private var interfaces: HashSet<String> = HashSet()
 
     /**
      * 访问类时回调
@@ -17,6 +21,13 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         super.visit(version, access, name, signature, superName, interfaces)
         className = name
         isInterface = access and Opcodes.ACC_INTERFACE != 0
+        this.superName = superName
+        this.interfaces.clear()
+        if (interfaces != null) {
+            for (interfaceName in interfaces) {
+                this.interfaces.add(interfaceName)
+            }
+        }
     }
 
 
@@ -43,7 +54,11 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
             return super.visitMethod(access, name, descriptor, signature, exceptions)
         }
 
-        // logger.info("className-->$className, name-->$name, descriptor-->$descriptor")
+        if (!ConfigMgr.validateBase(this.superName))
+            return super.visitMethod(access, name, descriptor, signature, exceptions)
+
+        if (!ConfigMgr.validateInterface(this.interfaces))
+            return super.visitMethod(access, name, descriptor, signature, exceptions)
 
         totals++
         return TimeMonitorMethodVisitor(

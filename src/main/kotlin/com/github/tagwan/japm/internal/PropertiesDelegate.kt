@@ -3,66 +3,73 @@ package com.github.tagwan.japm.internal
 
 import java.io.File
 import java.io.FileInputStream
-import java.net.URL
 import java.util.*
+import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
+import kotlin.reflect.full.isSuperclassOf
 
+class PropertiesDelegate(val path: String) {
 
-class PropertiesDelegate(private val path: String, private val defaultValu: String = "") {
-
-    private lateinit var url: URL
-
-    private val properties: Properties by lazy {
+    val properties: Properties by lazy {
         val prop = Properties()
-        url = try {
+        try {
             javaClass.getResourceAsStream(path).use {
                 prop.load(it)
             }
-            javaClass.getResource(path)!!
         } catch (e: Exception) {
+            //logger.error(e.message, e)
             try {
                 ClassLoader.getSystemClassLoader().getResourceAsStream(path).use {
                     prop.load(it)
                 }
-                ClassLoader.getSystemClassLoader().getResource(path)!!
             } catch (e: Exception) {
+                //logger.error(e.message, e)
                 FileInputStream(path).use {
                     prop.load(it)
                 }
-                URL("file:///${File(path).canonicalPath}")  // file后面三个斜杠
             }
         }
+
         prop
     }
 
-    operator fun getValue(thisRef: Any?, kProperty: KProperty<*>): String {
-        return properties.getProperty(kProperty.name, defaultValu)
+    @SuppressWarnings("unchecked")
+    operator fun <T> getValue(thisRef: Any, property: KProperty<*>): T {
+        val value = properties[property.name]
+        val classOfT = property.returnType.classifier as KClass<*>
+        return if (Number::class.isSuperclassOf(classOfT)) {
+            classOfT.javaObjectType.getDeclaredMethod("parse${classOfT.simpleName}", String::class.java).invoke(null, value)
+        } else {
+            value
+        } as T
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
-        properties.setProperty(property.name, value)
-        File(url.toURI()).outputStream().use {
+    operator fun <T> setValue(thisRef: Any, property: KProperty<*>, value: T) {
+        properties[property.name] = value
+        File(path).outputStream().use {
             properties.store(it, "")
         }
     }
 }
 
-abstract class AbsProperties(path: String) {
+abstract class AbstractProperties(path: String) {
     protected val prop = PropertiesDelegate(path)
 }
-
-class Config : AbsProperties("japm-template.properties") {
-    var name by prop
-    var selfKey by prop
+class MetricsCfg : AbstractProperties("japm-template.properties") {
+    var name: String by prop
+    var collect: Collect by prop
 }
+
+data class Collect(
+    val minTime: Long
+)
 
 fun main() {
 
-    val config = Config()
-    //config[]
+    val config = MetricsCfg()
+
     println(config.name)
-    println(config.name)
-    println(config.selfKey)
+    println(config.collect) // null
 
 }
 

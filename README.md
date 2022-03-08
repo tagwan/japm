@@ -46,3 +46,9 @@ java -javaagent:E:\\tmp\\japm-0.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties 
 
 ## Issue
 如果您有任何问题、疑问或者建议，您可以 [提交Issue](https://github.com/tagwan/japm/issues/new/choose)  ;-)
+
+## TODO
+- 监控方法命中次数
+- 上报http服务器
+- 上报es
+- 未完待续

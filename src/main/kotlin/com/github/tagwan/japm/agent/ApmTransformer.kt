@@ -33,7 +33,7 @@ class ApmTransformer : ClassFileTransformer {
             }
         }
 
-        logger.info("注入结束，本次共注入方法数::${TimeMonitorClassVisitor.totals}")
+        // logger.info("注入结束，本次共注入方法数::${TimeMonitorClassVisitor.totals}")
         return classfileBuffer
     }
 

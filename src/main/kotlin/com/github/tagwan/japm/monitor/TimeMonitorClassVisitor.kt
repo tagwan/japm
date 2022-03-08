@@ -39,9 +39,11 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         exceptions: Array<out String>?
     ): MethodVisitor {
 
-        if (isInterface || isNeedVisit(access, name)) {
+        if (isInterface || !canInject(access, name)) {
             return super.visitMethod(access, name, descriptor, signature, exceptions)
         }
+
+        // logger.info("className-->$className, name-->$name, descriptor-->$descriptor")
 
         totals++
         return TimeMonitorMethodVisitor(
@@ -51,13 +53,24 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         )
     }
 
-    private fun isNeedVisit(access: Int, name: String): Boolean {
-        //不对私有方法进行注入
+    /**
+     * 是否可以注入
+     *
+     * @param access
+     * @param name
+     * @return
+     */
+    private fun canInject(access: Int, name: String): Boolean {
+        if (name.isSpecialMethodName()) {
+            return false
+        }
+
+        // 不对私有方法进行注入
         if (access and Opcodes.ACC_PRIVATE != 0) {
             return false
         }
 
-        //不对抽象方法、native方法、桥接方法、合成方法进行注入
+        // 不对抽象方法、native方法、桥接方法、合成方法进行注入
         if (access and Opcodes.ACC_ABSTRACT != 0 || access and Opcodes.ACC_NATIVE != 0 || access and Opcodes.ACC_BRIDGE != 0 || access and Opcodes.ACC_SYNTHETIC != 0) {
             return false
         }
@@ -65,7 +78,27 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
         if ("<init>" == name || "<clinit>" == name) {
             return false
         }
+
+        if (name == "main" || name == "premain"
+            || name == "getClass" || name == "hashCode"
+            || name == "equals"|| name == "clone"|| name == "toString")
+            return false
+
         return !fieldNameList.contains(name)
+    }
+
+    /**
+     * Is special method name
+     *
+     * @return
+     */
+    private fun String.isSpecialMethodName(): Boolean {
+        val symbolIndex = this.indexOf('$')
+        if (symbolIndex < 0) {
+            return false
+        }
+        val leftParenIndex = this.indexOf('(')
+        return leftParenIndex < 0 || symbolIndex < leftParenIndex
     }
 
     companion object {

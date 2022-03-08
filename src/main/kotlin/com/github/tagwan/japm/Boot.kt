@@ -62,6 +62,9 @@ fun agentmain(args: String?, inst: Instrumentation?) {
 /**
  * Main
  *
+ * <p>
+ *     打印一些使用说明
+ *
  */
 fun main() {
     // pass

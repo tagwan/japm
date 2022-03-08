@@ -11,7 +11,7 @@ abstract class AbstractCollect {
         className: String,
         classFileBuffer: ByteArray
     ): ByteArray {
-        return if (needComputeMaxs(loader)) {
+        return if (needComputeMaxes(loader)) {
             val cr = ClassReader(classFileBuffer)
             val cw = ClassWriter(cr, ClassWriter.COMPUTE_MAXS)
             val cv: ClassVisitor = getClassVisitor(cw, className)
@@ -26,7 +26,7 @@ abstract class AbstractCollect {
         }
     }
 
-    protected open fun needComputeMaxs(classLoader: ClassLoader?): Boolean {
+    protected open fun needComputeMaxes(classLoader: ClassLoader?): Boolean {
         if (classLoader == null) {
             return false
         }
@@ -37,5 +37,5 @@ abstract class AbstractCollect {
             || loaderName.startsWith("org.apache.flink.runtime.execution.librarycache.FlinkUserCodeClassLoaders")
     }
 
-    abstract fun getClassVisitor(cw: ClassWriter, className: String): ClassVisitor
+    abstract fun getClassVisitor(cw: ClassWriter, clazzName: String): ClassVisitor
 }

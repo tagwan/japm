@@ -2,21 +2,51 @@ package com.github.tagwan.test
 
 import org.slf4j.LoggerFactory
 
-class Echo {
+interface IEcho {
+
+}
+
+abstract class BaseEcho {
+
+}
+
+class EchoImpl: BaseEcho(), IEcho {
+    var e: EchoImpl? = null
+
     fun echo(any: Any) {
-        Thread.sleep(5000)
-        val ss = 1123231
-        logger.info("Echo::echo()-->$ss")
-        logger.info("Echo::echo()-->$any")
+        Thread.sleep(3000)
         logger.info("Echo::echo()-->$any")
     }
 
+    fun show1() {
+        if (e == null)
+            return
+
+        e!!.echo("123")
+
+        val a = "456"
+
+        e!!.echo("123")
+    }
+
+    fun show2() {
+        val s = e
+        if (s == null)
+            return
+
+        s.echo("123")
+
+        val a = "456"
+
+        s.echo("123")
+    }
+
     companion object {
-        private val logger = LoggerFactory.getLogger(Echo::class.java)
+        private val logger = LoggerFactory.getLogger(EchoImpl::class.java)
     }
 }
 
 fun main() {
-    val obj = Echo()
+    val obj = EchoImpl()
     obj.echo(1111)
 }

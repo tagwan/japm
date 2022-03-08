@@ -1,6 +1,6 @@
 package com.github.tagwan.japm.monitor
 
-import com.github.tagwan.japm.internal.PropertiesUtils
+import com.github.tagwan.japm.cfg.ConfigMgr
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
@@ -10,7 +10,7 @@ object TimeMonitor {
     private val fnConvertName: (name: String) -> String = { key -> "TIME-${Thread.currentThread().id}-$key" }
     private var diff: Long = 0L
     fun init() {
-        diff = PropertiesUtils.getProperty("metrics.minTime").toLong()
+        diff = ConfigMgr.metricsCfg.minTime
     }
 
     fun start(key: String) {
@@ -25,7 +25,7 @@ object TimeMonitor {
         if (useTime < diff) {
             return
         }
-        logger.info("key:${key} 执行耗时 ${useTime}ms")
+        logger.info(" key: $key 执行耗时 ${useTime}ms")
     }
 }
 

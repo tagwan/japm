@@ -1,11 +1,11 @@
 package com.github.tagwan.japm
 
 import com.github.tagwan.japm.agent.ApmTransformer
+import com.github.tagwan.japm.cfg.ConfigMgr
 import com.github.tagwan.japm.const.BANNER
 import com.github.tagwan.japm.const.StateEnum
-import com.github.tagwan.japm.internal.PropertiesUtils
+import com.github.tagwan.japm.internal.FileUtils
 import com.github.tagwan.japm.monitor.TimeMonitor
-import com.github.tagwan.japm.monitor.TimeMonitorClassVisitor
 import org.slf4j.LoggerFactory
 import java.lang.instrument.Instrumentation
 
@@ -20,14 +20,14 @@ object Application {
     var state: StateEnum = StateEnum.Prepare
 
     fun init() {
-        PropertiesUtils.init()
+        ConfigMgr.init()
         TimeMonitor.init()
         state = StateEnum.Init
     }
 
     fun start(inst: Instrumentation) {
         state = StateEnum.Start
-        logger.info(PropertiesUtils.openText(this.javaClass.classLoader.getResource(BANNER)?.path ?: ""))
+        logger.info(FileUtils.openText(this.javaClass.classLoader.getResource(BANNER)?.path ?: ""))
         val transformer = ApmTransformer()
         inst.addTransformer(transformer)
         state = StateEnum.Running

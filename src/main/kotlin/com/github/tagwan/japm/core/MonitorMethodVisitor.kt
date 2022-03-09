@@ -1,5 +1,6 @@
 package com.github.tagwan.japm.core
 
+import com.github.tagwan.japm.monitor.TimeMonitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 
@@ -16,16 +17,16 @@ class MonitorMethodVisitor(
     override fun visitCode() {
         mv.visitFieldInsn(
             Opcodes.GETSTATIC,
-            "com/github/tagwan/japm/monitor/TimeMonitor",
+            TimeMonitor.clazzName,
             "INSTANCE",
-            "Lcom/github/tagwan/japm/monitor/TimeMonitor;"
+            "L${TimeMonitor.clazzName};"
         )
 
         mv.visitLdcInsn(key)
 
         mv.visitMethodInsn(
             Opcodes.INVOKEVIRTUAL,
-            "com/github/tagwan/japm/monitor/TimeMonitor",
+            TimeMonitor.clazzName,
             "start",
             "(Ljava/lang/String;)V",
             false
@@ -44,13 +45,16 @@ class MonitorMethodVisitor(
 
             mv.visitFieldInsn(
                 Opcodes.GETSTATIC,
-                "com/github/tagwan/japm/monitor/TimeMonitor", "INSTANCE", "Lcom/github/tagwan/japm/monitor/TimeMonitor;");
+                TimeMonitor.clazzName,
+                "INSTANCE",
+                "L${TimeMonitor.clazzName};"
+            )
 
             mv.visitLdcInsn(key)
 
             mv.visitMethodInsn(
                 Opcodes.INVOKEVIRTUAL,
-                "com/github/tagwan/japm/monitor/TimeMonitor",
+                TimeMonitor.clazzName,
                 "end",
                 "(Ljava/lang/String;)V",
                 false

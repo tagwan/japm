@@ -14,7 +14,7 @@ abstract class BaseMonitor(
     lateinit var clazzName: String
 
     fun init() {
-        TimeMonitor.clazzName = clazz.java.packageName.replace('.', '/')
+        TimeMonitor.clazzName = clazz.java.name.replace('.', '/')
         init2()
     }
 

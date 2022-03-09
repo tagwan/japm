@@ -1,5 +1,7 @@
 package com.github.tagwan.japm.core
 
+import com.github.tagwan.japm.const.METHOD_OVER
+import com.github.tagwan.japm.const.METHOD_START
 import com.github.tagwan.japm.monitor.TimeMonitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
@@ -27,7 +29,7 @@ class MonitorMethodVisitor(
         mv.visitMethodInsn(
             Opcodes.INVOKEVIRTUAL,
             TimeMonitor.clazzName,
-            "start",
+            METHOD_START,
             "(Ljava/lang/String;)V",
             false
         )
@@ -55,7 +57,7 @@ class MonitorMethodVisitor(
             mv.visitMethodInsn(
                 Opcodes.INVOKEVIRTUAL,
                 TimeMonitor.clazzName,
-                "end",
+                METHOD_OVER,
                 "(Ljava/lang/String;)V",
                 false
             )

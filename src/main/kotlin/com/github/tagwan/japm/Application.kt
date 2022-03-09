@@ -33,7 +33,6 @@ object Application {
         val transformer = ApmTransformer()
         inst.addTransformer(transformer)
         state = StateEnum.Running
-        logger.info("注入结束，本次共注入方法数::${MonitorClassVisitor.totals}")
     }
 
     fun exit() {

@@ -1,5 +1,6 @@
 package com.github.tagwan.japm.core
 
+import com.github.tagwan.japm.mgr.ConfigMgr
 import java.lang.instrument.ClassFileTransformer
 import java.security.ProtectionDomain
 
@@ -55,7 +56,7 @@ class ApmTransformer : ClassFileTransformer {
             || this.startsWith("com/sun")
             || this.startsWith("com/intellij")
             || this.startsWith("org/objectweb/asm")
-            || this.startsWith("com/github/tagwan/japm")
+            || this.startsWith(ConfigMgr.nowPackageName)
         ) {
             return false
         }

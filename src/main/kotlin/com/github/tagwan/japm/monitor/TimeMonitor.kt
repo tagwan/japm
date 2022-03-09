@@ -4,22 +4,22 @@ import com.github.tagwan.japm.mgr.ConfigMgr
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
-object TimeMonitor {
+object TimeMonitor : BaseMonitor(TimeMonitor::class) {
     private val logger = LoggerFactory.getLogger(TimeMonitor::class.java)
     private val timeMonitorMap = ConcurrentHashMap<String, Long>()
-    private val fnConvertName: (name: String) -> String = { key -> "TIME-${Thread.currentThread().id}-$key" }
     private var diff: Long = 0L
-    fun init() {
+
+    override fun init2() {
         diff = ConfigMgr.metricsCfg.minTime
     }
 
     fun start(key: String) {
         val now = System.currentTimeMillis()
-        timeMonitorMap[fnConvertName(key)] = now
+        timeMonitorMap[convertName(key)] = now
     }
 
     fun end(key: String) {
-        val startTime = timeMonitorMap[fnConvertName(key)]
+        val startTime = timeMonitorMap[convertName(key)]
             ?: return
         val useTime = System.currentTimeMillis() - startTime
         if (useTime < diff) {
@@ -27,5 +27,7 @@ object TimeMonitor {
         }
         logger.info(" key: $key 执行耗时 ${useTime}ms")
     }
+
+    private fun convertName(name: String) = "METRICS#TIME-${Thread.currentThread().id}-$name"
 }
 

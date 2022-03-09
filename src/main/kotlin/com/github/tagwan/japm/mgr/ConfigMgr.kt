@@ -1,5 +1,6 @@
 package com.github.tagwan.japm.mgr
 
+import com.github.tagwan.japm.Application
 import com.github.tagwan.japm.cfg.MetricsConfig
 import com.github.tagwan.japm.cfg.RequireConfig
 import com.github.tagwan.japm.cfg.StatisticsConfig
@@ -8,7 +9,7 @@ import com.github.tagwan.japm.const.PROPERTY_BOOT
 import org.slf4j.LoggerFactory
 
 object ConfigMgr {
-
+    var nowPackageName: String = "com/github/tagwan/japm"
     lateinit var requireCfg: RequireConfig
     lateinit var metricsCfg: MetricsConfig
     lateinit var statisticsCfg: StatisticsConfig
@@ -35,6 +36,7 @@ object ConfigMgr {
     }
 
     private fun build() {
+        nowPackageName = Application::class.java.packageName.replace('.', '/')
         packageName = requireCfg.packageName.splitCfg()
         interfaceName = requireCfg.interfaceName.splitCfg()
         baseName = requireCfg.baseName.splitCfg()

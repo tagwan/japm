@@ -2,7 +2,7 @@
 
 <h1 align="center">JAPM</h1>
 
-[![Github](https://img.shields.io/badge/GitHub-white.svg?style=flat-square&logo=github&logoColor=181717)](https://github.com/tagwan/jspm)
+[![Github](https://img.shields.io/badge/GitHub-white.svg?style=flat-square&logo=github&logoColor=181717)(https://github.com/tagwan/japm)
 ![GitHub](https://img.shields.io/github/license/tagwan/japm)
 ![GitHub stars](https://img.shields.io/github/stars/tagwan/japm.svg)
 ![GitHub forks](https://img.shields.io/github/forks/tagwan/japm.svg)

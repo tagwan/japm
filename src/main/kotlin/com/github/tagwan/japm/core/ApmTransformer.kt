@@ -28,12 +28,13 @@ class ApmTransformer : ClassFileTransformer {
             return null
         }
 
-        val builder = BytesBuilder()
-            .classLoader(loader)
-            .reader(classfileBuffer)
-            .writer()
-            .visitor()
-        return builder.build()
+        val asm = ASMLoader.build {
+            classLoader(loader)
+            reader(classfileBuffer)
+            writer()
+            visitor()
+        }
+        return asm.toBytes()
     }
 
     private fun ClassLoader.validateAPM(): Boolean {

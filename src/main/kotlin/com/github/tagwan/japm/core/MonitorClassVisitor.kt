@@ -15,7 +15,14 @@ class MonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
     private var interfaces: HashSet<String> = HashSet()
 
     /**
-     * 访问类时回调
+     * 访问类时
+     *
+     * @param version
+     * @param access
+     * @param name
+     * @param signature
+     * @param superName
+     * @param interfaces
      */
     override fun visit(version: Int, access: Int, name: String, signature: String?, superName: String?, interfaces: Array<out String>?) {
         super.visit(version, access, name, signature, superName, interfaces)
@@ -30,7 +37,19 @@ class MonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
         }
     }
 
-
+    /**
+     * 访问成员变量时
+     *
+     * <p>
+     *     将field构建下setter和getter避免注入方法
+     *
+     * @param access
+     * @param name
+     * @param descriptor
+     * @param signature
+     * @param value
+     * @return
+     */
     override fun visitField(access: Int, name: String, descriptor: String?, signature: String?, value: Any?): FieldVisitor {
         val upFieldName = name.substring(0, 1).toUpperCase() + name.substring(1)
         fieldNameList.add("get$upFieldName")
@@ -40,7 +59,19 @@ class MonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
     }
 
     /**
-     * 访问到方法时回调
+     * 访问到方法时
+     *
+     * <p>
+     *     接口中的方法忽略
+     *     私有方法、抽象方法、Object的方法、构造方法..
+     *
+     *
+     * @param access
+     * @param name
+     * @param descriptor
+     * @param signature
+     * @param exceptions
+     * @return
      */
     override fun visitMethod(
         access: Int,

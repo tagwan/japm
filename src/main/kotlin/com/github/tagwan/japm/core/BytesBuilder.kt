@@ -8,7 +8,7 @@ class BytesBuilder {
 
     lateinit var loader: ClassLoader
     lateinit var cr: ClassReader
-    lateinit var cw : ClassWriter
+    lateinit var cw: ClassWriter
     lateinit var cv: ClassVisitor
 
     fun classLoader(loader: ClassLoader): BytesBuilder {

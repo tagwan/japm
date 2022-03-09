@@ -52,6 +52,8 @@ java -javaagent:E:\\tmp\\japm-1.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties 
 ## TODO
 - 方法耗时 ✓
 - 监控方法命中次数 ✗
-- 上报http服务器 ✗
-- 上报es ✗
+- try/catch下异常监控 ✗
+- JVM健康指标监控 ✗
+- 上报http服务器 or es ✗
+- 邮件通知 or 机器人通知
 - 未完待续

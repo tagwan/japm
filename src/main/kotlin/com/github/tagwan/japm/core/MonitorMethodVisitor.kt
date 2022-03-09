@@ -1,11 +1,21 @@
 package com.github.tagwan.japm.core
 
+import com.github.tagwan.japm.const.FUNC_VOID_STRING
 import com.github.tagwan.japm.const.METHOD_OVER
 import com.github.tagwan.japm.const.METHOD_START
 import com.github.tagwan.japm.monitor.TimeMonitor
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 
+/**
+ * Monitor method visitor
+ *
+ * @property key
+ * @constructor
+ *
+ * @param api
+ * @param mv
+ */
 class MonitorMethodVisitor(
     api: Int,
     mv: MethodVisitor,
@@ -30,7 +40,7 @@ class MonitorMethodVisitor(
             Opcodes.INVOKEVIRTUAL,
             TimeMonitor.clazzName,
             METHOD_START,
-            "(Ljava/lang/String;)V",
+            FUNC_VOID_STRING,
             false
         )
     }
@@ -58,7 +68,7 @@ class MonitorMethodVisitor(
                 Opcodes.INVOKEVIRTUAL,
                 TimeMonitor.clazzName,
                 METHOD_OVER,
-                "(Ljava/lang/String;)V",
+                FUNC_VOID_STRING,
                 false
             )
         }

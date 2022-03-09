@@ -4,7 +4,12 @@ import com.github.tagwan.japm.mgr.ConfigMgr
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 
-object TimeMonitor : BaseMonitor(TimeMonitor::class) , IMonitor {
+/**
+ * 执行时间
+ *
+ * @constructor Create empty Time monitor
+ */
+object TimeMonitor : BaseMonitor(TimeMonitor::class), IMonitor {
     private val logger = LoggerFactory.getLogger(TimeMonitor::class.java)
     private val timeMonitorMap = ConcurrentHashMap<String, Long>()
     private var diff: Long = 0L
@@ -13,11 +18,13 @@ object TimeMonitor : BaseMonitor(TimeMonitor::class) , IMonitor {
         diff = ConfigMgr.metricsCfg.minTime
     }
 
+    @InjectOrder(1)
     override fun injectOnStart(key: String) {
         val now = System.currentTimeMillis()
         timeMonitorMap[convertName(key)] = now
     }
 
+    @InjectOrder(1)
     override fun injectOnOver(key: String) {
         val startTime = timeMonitorMap[convertName(key)]
             ?: return

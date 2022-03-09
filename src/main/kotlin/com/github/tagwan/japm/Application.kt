@@ -21,6 +21,7 @@ object Application {
     var state: StateEnum = StateEnum.Prepare
 
     fun init() {
+        // 当前的包名存一下
         ConfigMgr.init()
         MetricsMgr.init()
         state = StateEnum.Init

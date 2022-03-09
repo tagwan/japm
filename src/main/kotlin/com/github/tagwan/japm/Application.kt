@@ -1,11 +1,12 @@
 package com.github.tagwan.japm
 
-import com.github.tagwan.japm.agent.ApmTransformer
-import com.github.tagwan.japm.cfg.ConfigMgr
+import com.github.tagwan.japm.core.ApmTransformer
+import com.github.tagwan.japm.mgr.ConfigMgr
 import com.github.tagwan.japm.const.BANNER
 import com.github.tagwan.japm.const.StateEnum
+import com.github.tagwan.japm.core.MonitorClassVisitor
 import com.github.tagwan.japm.internal.FileUtils
-import com.github.tagwan.japm.monitor.TimeMonitor
+import com.github.tagwan.japm.mgr.MetricsMgr
 import org.slf4j.LoggerFactory
 import java.lang.instrument.Instrumentation
 
@@ -21,7 +22,7 @@ object Application {
 
     fun init() {
         ConfigMgr.init()
-        TimeMonitor.init()
+        MetricsMgr.init()
         state = StateEnum.Init
     }
 
@@ -31,6 +32,7 @@ object Application {
         val transformer = ApmTransformer()
         inst.addTransformer(transformer)
         state = StateEnum.Running
+        logger.info("注入结束，本次共注入方法数::${MonitorClassVisitor.totals}")
     }
 
     fun exit() {

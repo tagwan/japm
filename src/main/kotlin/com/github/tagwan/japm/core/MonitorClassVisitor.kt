@@ -1,12 +1,12 @@
-package com.github.tagwan.japm.monitor
+package com.github.tagwan.japm.core
 
-import com.github.tagwan.japm.cfg.ConfigMgr
+import com.github.tagwan.japm.mgr.ConfigMgr
 import org.objectweb.asm.*
 import org.slf4j.LoggerFactory
 import java.util.*
 import kotlin.collections.HashSet
 
-class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
+class MonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) {
 
     private lateinit var className: String
     private var isInterface: Boolean = false
@@ -61,10 +61,10 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
             return super.visitMethod(access, name, descriptor, signature, exceptions)
 
         totals++
-        return TimeMonitorMethodVisitor(
+        return MonitorMethodVisitor(
             api,
             cv.visitMethod(access, name, descriptor, signature, exceptions),
-            "${className}-${name}-${descriptor}"
+            "${className}::${name}"
         )
     }
 
@@ -117,7 +117,7 @@ class TimeMonitorClassVisitor(cw: ClassWriter) : ClassVisitor(Opcodes.ASM9, cw) 
     }
 
     companion object {
-        private val logger = LoggerFactory.getLogger(TimeMonitorClassVisitor::class.java)
+        private val logger = LoggerFactory.getLogger(MonitorClassVisitor::class.java)
         var totals = 0
     }
 }

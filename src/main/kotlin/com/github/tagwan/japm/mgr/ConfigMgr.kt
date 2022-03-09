@@ -1,5 +1,8 @@
-package com.github.tagwan.japm.cfg
+package com.github.tagwan.japm.mgr
 
+import com.github.tagwan.japm.cfg.MetricsConfig
+import com.github.tagwan.japm.cfg.RequireConfig
+import com.github.tagwan.japm.cfg.StatisticsConfig
 import com.github.tagwan.japm.const.DEFAULT_CFG
 import com.github.tagwan.japm.const.PROPERTY_BOOT
 import org.slf4j.LoggerFactory

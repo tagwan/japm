@@ -1,6 +1,6 @@
 package com.github.tagwan.japm.monitor
 
-import com.github.tagwan.japm.cfg.ConfigMgr
+import com.github.tagwan.japm.mgr.ConfigMgr
 import org.slf4j.LoggerFactory
 import java.util.concurrent.ConcurrentHashMap
 

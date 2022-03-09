@@ -1,4 +1,4 @@
-package com.github.tagwan.j;
+package com.github.tagwan.jtest;
 
 public class Echo {
 

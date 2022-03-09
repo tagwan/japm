@@ -1,9 +1,9 @@
-package com.github.tagwan.japm.monitor
+package com.github.tagwan.japm.core
 
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 
-class TimeMonitorMethodVisitor(
+class MonitorMethodVisitor(
     api: Int,
     mv: MethodVisitor,
     private val key: String

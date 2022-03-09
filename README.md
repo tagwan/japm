@@ -43,7 +43,7 @@ gradlew clean buid
 
 eg..
 ```bash
-java -javaagent:E:\\tmp\\japm-0.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties `-jar application.jar`
+java -javaagent:E:\\tmp\\japm-1.0.1.jar -DJapmPropFile=E:\\tmp\\japm.properties `-jar application.jar`
 ```
 
 ## Issue

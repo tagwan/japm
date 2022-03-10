@@ -2,7 +2,6 @@ package com.github.tagwan.japm.internal
 
 import java.lang.management.GarbageCollectorMXBean
 import java.lang.management.ManagementFactory
-import java.util.*
 
 
 /**

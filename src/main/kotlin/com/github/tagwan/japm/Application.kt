@@ -4,9 +4,9 @@ import com.github.tagwan.japm.core.ApmTransformer
 import com.github.tagwan.japm.mgr.ConfigMgr
 import com.github.tagwan.japm.const.BANNER
 import com.github.tagwan.japm.const.StateEnum
-import com.github.tagwan.japm.core.MonitorClassVisitor
 import com.github.tagwan.japm.internal.FileUtils
 import com.github.tagwan.japm.mgr.MetricsMgr
+import com.github.tagwan.japm.mgr.SystemMgr
 import org.slf4j.LoggerFactory
 import java.lang.instrument.Instrumentation
 
@@ -24,6 +24,7 @@ object Application {
         // 当前的包名存一下
         ConfigMgr.init()
         MetricsMgr.init()
+        SystemMgr.init()
         state = StateEnum.Init
     }
 

@@ -4,7 +4,6 @@ import com.github.tagwan.japm.data.JVMMemoryUsage
 import java.lang.management.ManagementFactory
 import java.lang.management.MemoryMXBean
 import java.lang.management.MemoryPoolMXBean
-import java.util.*
 
 
 /**
@@ -175,35 +174,5 @@ object JVMMemoryUtils {
             }
         }
         return null
-    }
-}
-
-fun main(args: Array<String>) {
-    val listRoot: MutableList<List<Long>> = ArrayList()
-    while (true) {
-        println("=======================================================================")
-        println("getHeapMemoryUsage: " + JVMMemoryUtils.heapMemoryUsage)
-        println("getNonHeapMemoryUsage: " + JVMMemoryUtils.nonHeapMemoryUsage)
-        println("getEdenSpaceMemoryUsage: " + JVMMemoryUtils.edenSpaceMemoryUsage)
-        println("getAndResetEdenSpaceMemoryPeakUsage: " + JVMMemoryUtils.andResetEdenSpaceMemoryPeakUsage)
-        println("getSurvivorSpaceMemoryUsage: " + JVMMemoryUtils.survivorSpaceMemoryUsage)
-        println("getAndResetSurvivorSpaceMemoryPeakUsage: " + JVMMemoryUtils.andResetSurvivorSpaceMemoryPeakUsage)
-        println("getOldGenMemoryUsage: " + JVMMemoryUtils.oldGenMemoryUsage)
-        println("getAndResetOldGenMemoryPeakUsage: " + JVMMemoryUtils.andResetOldGenMemoryPeakUsage)
-        println("getPermGenMemoryUsage: " + JVMMemoryUtils.permGenMemoryUsage)
-        println("getAndResetPermGenMemoryPeakUsage: " + JVMMemoryUtils.andResetPermGenMemoryPeakUsage)
-        println("getCodeCacheMemoryUsage: " + JVMMemoryUtils.codeCacheMemoryUsage)
-        println("getAndResetCodeCacheMemoryPeakUsage: " + JVMMemoryUtils.andResetCodeCacheMemoryPeakUsage)
-        val list: ArrayList<Long> = ArrayList(10000)
-        listRoot.add(list)
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        if (list.size > 1) {
-            list.removeAt(0)
-        }
-        Runtime.getRuntime().gc()
     }
 }

@@ -1,6 +1,7 @@
 package com.github.tagwan.japm.core
 
 import com.github.tagwan.japm.const.FUNC_VOID_STRING
+import com.github.tagwan.japm.const.INSTANCE
 import com.github.tagwan.japm.const.METHOD_OVER
 import com.github.tagwan.japm.const.METHOD_START
 import com.github.tagwan.japm.monitor.TimeMonitor
@@ -9,9 +10,6 @@ import org.objectweb.asm.Opcodes
 
 /**
  * Monitor method visitor
- *
- * @property key
- * @constructor
  *
  * @param api
  * @param mv
@@ -30,10 +28,11 @@ class MonitorMethodVisitor(
         mv.visitFieldInsn(
             Opcodes.GETSTATIC,
             TimeMonitor.clazzName,
-            "INSTANCE",
+            INSTANCE,
             "L${TimeMonitor.clazzName};"
         )
 
+        // LDC
         mv.visitLdcInsn(key)
 
         mv.visitMethodInsn(
@@ -58,10 +57,11 @@ class MonitorMethodVisitor(
             mv.visitFieldInsn(
                 Opcodes.GETSTATIC,
                 TimeMonitor.clazzName,
-                "INSTANCE",
+                INSTANCE,
                 "L${TimeMonitor.clazzName};"
             )
 
+            // LDC
             mv.visitLdcInsn(key)
 
             mv.visitMethodInsn(

@@ -62,27 +62,3 @@ object JVMGCUtils {
         }
     }
 }
-
-fun main(args: Array<String>) {
-    val listRoot: MutableList<List<Long>> = ArrayList()
-    while (true) {
-        println("=======================================================================")
-        println("getYoungGCName: " + JVMGCUtils.youngGCName)
-        println("getYoungGCCollectionCount: " + JVMGCUtils.youngGCCollectionCount)
-        println("getYoungGCCollectionTime: " + JVMGCUtils.youngGCCollectionTime)
-        println("getFullGCName: " + JVMGCUtils.fullGCName)
-        println("getFullGCCollectionCount: " + JVMGCUtils.fullGCCollectionCount)
-        println("getFullGCCollectionTime: " + JVMGCUtils.fullGCCollectionTime)
-        val list: ArrayList<Long> = ArrayList(1000)
-        listRoot.add(list)
-        try {
-            Thread.sleep(3000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        if (list.size > 1) {
-            list.removeAt(0)
-        }
-        Runtime.getRuntime().gc()
-    }
-}

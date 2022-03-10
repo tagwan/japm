@@ -33,6 +33,12 @@ object JVMMemoryUtils {
             // JDK1.7  方法/永久区内存池名称： "Perm Gen" 或 "PS Perm Gen"(和垃圾收集器有关)
             // JDK1.8  方法/永久区内存池名称："Metaspace"(注意：不在堆内存中)
             // JDK1.7/1.8  CodeCache区内存池名称： "Code Cache"
+            // JDK1.9开始，JVM将 Code Cache
+            // 细分为三个不同的段 (
+            //  非方法段(non-method segment) 保存相关的JVM内部代码
+            //  待分析代码段(profiled-code segment) 包含经过简单优化的代码
+            //  静态代码段(non-profiled segment) 保存经过全面优化的本地代码
+            //  )
             when {
                 poolName.endsWith("Eden Space") -> {
                     edenSpaceMxBean = memoryPoolMXBean
@@ -46,9 +52,10 @@ object JVMMemoryUtils {
                 poolName.endsWith("Perm Gen") || poolName.endsWith("Metaspace") -> {
                     permGenMxBean = memoryPoolMXBean
                 }
-                poolName.endsWith("Code Cache") -> {
+                poolName.endsWith("Code Cache") || poolName.startsWith("CodeHeap")-> {
                     codeCacheMxBean = memoryPoolMXBean
                 }
+
             }
         }
     }

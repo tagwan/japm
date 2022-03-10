@@ -25,3 +25,9 @@ const val STRING = "java/lang/String"
 const val FUNC_VOID_STRING = "($REF$STRING;)$VOID" // "(Ljava/lang/String;)V"
 
 const val INSTANCE = "INSTANCE" // kotlin中object获取的默认
+
+// region JAVA Version
+const val JAVA7 = 7
+const val JAVA8 = 8
+const val JAVA11 = 11
+// endregion

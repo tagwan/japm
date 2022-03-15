@@ -61,8 +61,8 @@ tasks {
             attributes(
                 "Implementation-Title" to project.name,
                 "Implementation-Version" to "1.0.0",
-                "Premain-Class" to "com.github.tagwan.japm.BootKt", // 对应premain方法
-                "Agent-Class" to "com.github.tagwan.japm.BootKt",   // 对应agentmain方法
+                "Premain-Class" to "com.github.tagwan.japm.BootKt",
+                "Agent-Class" to "com.github.tagwan.japm.BootKt",
                 "Built-By" to "Espresso"
             )
         }

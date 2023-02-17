@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
  *
  * @author jdg
  */
-abstract class BaseMonitor(
+abstract class AbstractMonitor(
     private val clazz: KClass<*>
 ) {
 

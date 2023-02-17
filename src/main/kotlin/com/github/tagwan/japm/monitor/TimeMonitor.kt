@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * @constructor Create empty Time monitor
  */
-object TimeMonitor : BaseMonitor(TimeMonitor::class), IMonitor {
+object TimeMonitor : AbstractMonitor(TimeMonitor::class), IMonitor {
     private val logger = LoggerFactory.getLogger(TimeMonitor::class.java)
     private val timeMonitorMap = ConcurrentHashMap<String, Long>()
     private var diff: Long = 0L

@@ -1,7 +1,7 @@
 package com.github.tagwan.japm.monitor
 
 /**
- * I monitor
+ * 监控接口
  *
  * @constructor Create empty I monitor
  */

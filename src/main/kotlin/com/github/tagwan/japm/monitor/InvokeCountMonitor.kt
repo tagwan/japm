@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
  *
  * @constructor Create empty Count monitor
  */
-object InvokeCountMonitor : BaseMonitor(InvokeCountMonitor::class), IMonitor {
+object InvokeCountMonitor : AbstractMonitor(InvokeCountMonitor::class), IMonitor {
 
     private val logger = LoggerFactory.getLogger(TimeMonitor::class.java)
     private val countMonitorMap = HashMap<String, Int>()

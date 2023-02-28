@@ -38,7 +38,8 @@ class PropertiesDelegate(
         val value = properties["$prefix${property.name}"]
         val classOfT = property.returnType.classifier as KClass<*>
         return if (Number::class.isSuperclassOf(classOfT)) {
-            classOfT.javaObjectType.getDeclaredMethod("parse${classOfT.simpleName}", String::class.java).invoke(null, value)
+            classOfT.javaObjectType.getDeclaredMethod("parse${classOfT.simpleName}", String::class.java)
+                .invoke(null, value)
         } else {
             value
         } as T

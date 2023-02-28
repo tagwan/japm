@@ -5,15 +5,19 @@ plugins {
     `java-library`
     java
     distribution
-    kotlin("jvm") version "1.6.21" apply false
+    kotlin("jvm") version Versions.Kotlin apply false
 }
 
 group = "com.github.tagwan"
-version = "1.0.1"
+version = "1.0.1.RELEASE"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    maven("https://maven.aliyun.com/repository/public/")
+    maven("https://maven.aliyun.com/repository/gradle-plugin")
+    maven("https://plugins.gradle.org/m2/")
 }
 
 apply(plugin = "idea")
@@ -21,21 +25,24 @@ apply(plugin = "java")
 apply(plugin = "kotlin")
 apply(plugin = "java-library")
 
+val api by configurations
+val testImplementation by configurations
+
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.3")
+    api(Deps.Kotlin.Reflect)
+    api(Deps.Kotlin.Jvm)
+    api(Deps.Kotlinx)
+    api(Deps.Asm)
+    api(Deps.Slf4j.Api)
+    api(Deps.Slf4j.Impl)
 
-    implementation("org.ow2.asm:asm:9.2")
-
-    implementation("org.slf4j:slf4j-api:1.7.33")
-    implementation("org.slf4j:slf4j-log4j12:1.7.33")
-
-    testImplementation("junit:junit:4.12")
+    testImplementation(Deps.Junit.JupiterEngine)
+    testImplementation(Deps.Junit.JupiterApi)
+    testImplementation(Deps.Junit.Jupiter)
 }
 
 tasks {
-    withType<JavaCompile>() {
+    withType<JavaCompile> {
         options.isFork = true
         options.encoding = "UTF-8"
     }
